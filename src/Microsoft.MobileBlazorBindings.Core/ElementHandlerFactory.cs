@@ -13,7 +13,7 @@ namespace Microsoft.MobileBlazorBindings.Core
         {
             _callback = callback ?? throw new ArgumentNullException(nameof(callback));
         }
-
+        
         public IElementHandler CreateElementHandler(ElementHandlerFactoryContext context)
         {
             return _callback(context.Renderer, context.ParentHandler);

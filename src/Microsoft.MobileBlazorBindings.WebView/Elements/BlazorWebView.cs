@@ -27,11 +27,11 @@ namespace Microsoft.MobileBlazorBindings.WebView.Elements
         private readonly Dispatcher _dispatcher;
         private readonly WebViewExtended _webView;
         private readonly IPC _ipc;
-        private readonly JSRuntime _jsRuntime;
         private readonly bool _initOnParentSet;
         private static readonly RenderFragment EmptyRenderFragment = builder => { };
         private Task<InteropHandshakeResult> _attachInteropTask;
         private IServiceScope _serviceScope;
+        private JSRuntime _jsRuntime;
         private BlazorHybridRenderer _blazorHybridRenderer;
         private BlazorHybridNavigationManager _navigationManager;
 
@@ -156,7 +156,6 @@ namespace Microsoft.MobileBlazorBindings.WebView.Elements
             });
 
             _ipc = new IPC(_webView);
-            _jsRuntime = new BlazorHybridJSRuntime(_ipc);
         }
 
         private string GetResourceFilenameFromUri(Uri uri)
@@ -168,13 +167,19 @@ namespace Microsoft.MobileBlazorBindings.WebView.Elements
         // BlazorWebView directly from Xamarin Forms XAML. It only works from MBB.
         public async Task InitAsync()
         {
+            var outerServices = Services ?? BlazorHybridDefaultServices.Instance ?? DefaultServices.Value;
+
+            _serviceScope = outerServices.CreateScope();
+            var scopeServiceProvider = _serviceScope.ServiceProvider;
+
+            var webViewJSRuntime = (BlazorHybridJSRuntime)scopeServiceProvider.GetRequiredService<IJSRuntime>();
+            webViewJSRuntime.AttachToIpcChannel(_ipc);
+            _jsRuntime = webViewJSRuntime;
+
             _attachInteropTask ??= AttachInteropAsync();
             var handshakeResult = await _attachInteropTask.ConfigureAwait(false);
 
-            var outerServices = Services ?? BlazorHybridDefaultServices.Instance ?? DefaultServices.Value;
-            _serviceScope = outerServices.CreateScope();
-            var scopeServiceProvider = _serviceScope.ServiceProvider;
-            var perWebViewServices = new DelegatingServiceProviderWithJsRuntime(scopeServiceProvider, _jsRuntime);
+            var perWebViewServices = scopeServiceProvider;// new DelegatingServiceProviderWithJsRuntime(scopeServiceProvider, _jsRuntime);
 
             var loggerFactory = perWebViewServices.GetRequiredService<ILoggerFactory>();
             _navigationManager = (BlazorHybridNavigationManager)perWebViewServices.GetRequiredService<NavigationManager>();

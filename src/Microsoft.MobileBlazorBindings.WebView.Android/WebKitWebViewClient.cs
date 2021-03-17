@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 using Android.Graphics;
+using Android.Net.Http;
 using Android.Runtime;
 using Android.Webkit;
 using System;
@@ -75,6 +76,12 @@ namespace Microsoft.MobileBlazorBindings.WebView.Android
 
             return base.ShouldInterceptRequest(view, request);
         }
+
+        //public override void OnReceivedSslError(AWebView view, SslErrorHandler handler, SslError error)
+        //{
+        //    handler.Proceed();
+        //    //base.OnReceivedSslError(view, handler, error);
+        //}
 
         public override void OnPageStarted(AWebView view, string url, Bitmap favicon)
         {

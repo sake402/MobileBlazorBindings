@@ -8,7 +8,7 @@ using System.Collections.Concurrent;
 
 namespace Microsoft.MobileBlazorBindings.WebView.Android
 {
-    internal static class ActivityResultCallbackRegistryHelper
+    /*internal*/public static class ActivityResultCallbackRegistryHelper
     {
         private static readonly ConcurrentDictionary<int, Action<Result, Intent>> s_activityResultCallbacks =
             new ConcurrentDictionary<int, Action<Result, Intent>>();
