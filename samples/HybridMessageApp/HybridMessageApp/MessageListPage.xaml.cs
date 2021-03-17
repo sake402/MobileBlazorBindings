@@ -3,7 +3,6 @@
 
 using HybridMessageApp.Data;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.MobileBlazorBindings.WebView;
 using Microsoft.MobileBlazorBindings.WebView.Elements;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,14 +14,17 @@ namespace HybridMessageApp
     {
         private readonly ContentPage detailsPage = new ContentPage
         {
-            Content = new BlazorWebView<WebUI.MessageDetails> { ContentRoot = "WebUI/wwwroot" }
+            Content = new BlazorWebView<WebUI.MessageDetails> { Host = MainPage.Host }
         };
         private readonly AppState appState;
 
         public MessageListPage()
         {
             InitializeComponent();
-            appState = BlazorHybridDefaultServices.Instance.GetRequiredService<AppState>();
+
+            MessageListWebView.Host = MainPage.Host;
+
+            appState = MainPage.Host.Services.GetRequiredService<AppState>();
         }
 
         protected override void OnAppearing()
@@ -36,10 +38,10 @@ namespace HybridMessageApp
             //  3. Rotate to landscape
             //  4. Click 'back'
             // This property assignment results in a call to UpdateTitleArea on NavigationRenderer
-            var master = ((MasterDetailPage)Parent.Parent).Master;
-            var originalValue = master.IconImageSource;
-            master.IconImageSource = "temp.png";
-            master.IconImageSource = originalValue;
+            var flyout = ((FlyoutPage)Parent.Parent).Flyout;
+            var originalValue = flyout.IconImageSource;
+            flyout.IconImageSource = "temp.png";
+            flyout.IconImageSource = originalValue;
         }
 
         protected override void OnDisappearing()

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Normally this import would be automatic through the nuget package. We do it manually for projects inside this solution. -->
+  <Import Project="..\..\..\src\Microsoft.MobileBlazorBindings.WebView.Android\build\Microsoft.MobileBlazorBindings.WebView.Android.props" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,7 +19,7 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidCommandLineToolsVersion>latest</AndroidCommandLineToolsVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -56,8 +58,8 @@
     <PackageReference Include="System.Text.Encodings.Web">
       <Version>4.7.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -103,10 +105,17 @@
       <Name>HybridApp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties XamarinHotReloadDebuggerTimeoutExceptionHybridAppAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
+  <!-- Normally this import would be automatic through the nuget package. We do it manually for projects inside this solution. -->
+  <Import Project="..\..\..\src\Microsoft.MobileBlazorBindings.WebView.Android\build\Microsoft.MobileBlazorBindings.WebView.Android.targets" />
 </Project>

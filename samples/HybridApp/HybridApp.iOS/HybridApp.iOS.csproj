@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Normally this import would be automatic through the nuget package. We do it manually for projects inside this solution. -->
+  <Import Project="..\..\..\src\Microsoft.MobileBlazorBindings.WebView.iOS\build\Microsoft.MobileBlazorBindings.WebView.iOS.props" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
@@ -120,8 +122,8 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
     <PackageReference Include="System.Memory" Version="4.5.4" IncludeAssets="None" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -133,13 +135,18 @@
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\HybridApp\HybridApp.csproj">
-      <Project>{de71f6d4-9950-472a-90b2-f4074810ae6d}</Project>
+      <Project>{01A7CEE6-B551-41CE-99F7-2C6B29566C9B}</Project>
       <Name>HybridApp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\wwwroot\index.html" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties XamarinHotReloadGenericExceptionInfoBarHybridAppiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
+  <!-- Normally this import would be automatic through the nuget package. We do it manually for projects inside this solution. -->
+  <Import Project="..\..\..\src\Microsoft.MobileBlazorBindings.WebView.iOS\build\Microsoft.MobileBlazorBindings.WebView.iOS.targets" />
 </Project>

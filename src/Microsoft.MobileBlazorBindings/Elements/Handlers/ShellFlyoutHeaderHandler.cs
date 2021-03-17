@@ -7,7 +7,7 @@ using XF = Xamarin.Forms;
 
 namespace Microsoft.MobileBlazorBindings.Elements.Handlers
 {
-    public class ShellFlyoutHeaderHandler : IXamarinFormsElementHandler, INonChildContainerElement
+    public class ShellFlyoutHeaderHandler : IXamarinFormsContainerElementHandler, INonChildContainerElement
     {
         public ShellFlyoutHeaderHandler(NativeComponentRenderer renderer, DummyElement shellFlyoutHeaderDummyControl)
         {
@@ -38,7 +38,13 @@ namespace Microsoft.MobileBlazorBindings.Elements.Handlers
             _parentChildManager.SetChild(child);
         }
 
-        public int GetPhysicalSiblingIndex()
+        public void RemoveChild(XF.Element child)
+        {
+            // TODO: This could probably be implemented at some point, but it isn't needed right now
+            throw new NotImplementedException();
+        }
+
+        public int GetChildIndex(XF.Element child)
         {
             // Because this is a 'fake' element, all matters related to physical trees
             // should be no-ops.

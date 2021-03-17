@@ -24,6 +24,7 @@ namespace Microsoft.MobileBlazorBindings.Elements
         /// A <see cref="T:Xamarin.Forms.ImageSource" /> that represents an icon.
         /// </value>
         [Parameter] public XF.ImageSource FlyoutIcon { get; set; }
+        [Parameter] public bool? FlyoutItemIsVisible { get; set; }
         /// <summary>
         /// Defines the icon to display in parts of the chrome that are not the flyout.
         /// </summary>
@@ -76,11 +77,15 @@ namespace Microsoft.MobileBlazorBindings.Elements
 
             if (FlyoutIcon != null)
             {
-                builder.AddAttribute(nameof(FlyoutIcon), AttributeHelper.ImageSourceToDelegate(FlyoutIcon));
+                builder.AddAttribute(nameof(FlyoutIcon), AttributeHelper.ObjectToDelegate(FlyoutIcon));
+            }
+            if (FlyoutItemIsVisible != null)
+            {
+                builder.AddAttribute(nameof(FlyoutItemIsVisible), FlyoutItemIsVisible.Value);
             }
             if (Icon != null)
             {
-                builder.AddAttribute(nameof(Icon), AttributeHelper.ImageSourceToDelegate(Icon));
+                builder.AddAttribute(nameof(Icon), AttributeHelper.ObjectToDelegate(Icon));
             }
             if (IsEnabled != null)
             {

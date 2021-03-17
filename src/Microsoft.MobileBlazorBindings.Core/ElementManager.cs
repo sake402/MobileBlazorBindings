@@ -12,9 +12,9 @@ namespace Microsoft.MobileBlazorBindings.Core
     public abstract class ElementManager
     {
         public abstract void AddChildElement(IElementHandler parentHandler, IElementHandler childHandler, int physicalSiblingIndex);
-        public abstract int GetPhysicalSiblingIndex(IElementHandler handler);
+        public abstract int GetChildElementIndex(IElementHandler parentHandler, IElementHandler childHandler);
         public abstract bool IsParented(IElementHandler handler);
         public abstract bool IsParentOfChild(IElementHandler parentHandler, IElementHandler childHandler);
-        public abstract void RemoveElement(IElementHandler handler);
+        public abstract void RemoveChildElement(IElementHandler parentHandler, IElementHandler childHandler);
     }
 }

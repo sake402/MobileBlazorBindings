@@ -7,7 +7,7 @@ using XF = Xamarin.Forms;
 
 namespace Microsoft.MobileBlazorBindings.Elements.Handlers
 {
-    public class GridCellHandler : IXamarinFormsElementHandler, INonChildContainerElement
+    public class GridCellHandler : IXamarinFormsContainerElementHandler, INonChildContainerElement
     {
         public GridCellHandler(NativeComponentRenderer renderer, GridCellPlaceholderElement gridCellPlaceholderElementControl)
         {
@@ -55,7 +55,13 @@ namespace Microsoft.MobileBlazorBindings.Elements.Handlers
             _parentChildManager.SetChild(child);
         }
 
-        public int GetPhysicalSiblingIndex()
+        public void RemoveChild(XF.Element child)
+        {
+            // TODO: This could probably be implemented at some point, but it isn't needed right now
+            throw new NotImplementedException();
+        }
+
+        public int GetChildIndex(XF.Element child)
         {
             // Because this is a 'fake' element, all matters related to physical trees
             // should be no-ops.

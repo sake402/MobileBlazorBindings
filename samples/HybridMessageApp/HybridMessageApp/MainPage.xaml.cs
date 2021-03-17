@@ -3,7 +3,9 @@
 
 using HybridMessageApp.Data;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.MobileBlazorBindings.WebView;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
+using Microsoft.MobileBlazorBindings;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -11,19 +13,36 @@ namespace HybridMessageApp
 {
     public partial class MainPage : Application
     {
-        public MainPage()
-        {
-            BlazorHybridHost.AddResourceAssembly(GetType().Assembly, contentRoot: "WebUI/wwwroot");
+        public static IHost Host { get; private set; }
 
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddBlazorHybrid();
-            serviceCollection.AddLogging();
-            serviceCollection.AddSingleton<AppState>();
-            BlazorHybridDefaultServices.Instance = serviceCollection.BuildServiceProvider();
+        public MainPage(string[] args = null, IFileProvider fileProvider = null)
+        {
+            var hostBuilder = MobileBlazorBindingsHost.CreateDefaultBuilder(args)
+                .ConfigureServices((hostContext, services) =>
+                {
+                    // Adds web-specific services such as NavigationManager
+                    services.AddBlazorHybrid();
+
+                    // Register app-specific services
+                    services.AddSingleton<AppState>();
+                })
+                .UseWebRoot("wwwroot");
+
+            if (fileProvider != null)
+            {
+                hostBuilder.UseStaticFiles(fileProvider);
+            }
+            else
+            {
+                hostBuilder.UseStaticFiles();
+            }
+            Host = hostBuilder.Build();
 
             InitializeComponent();
 
-            MasterDetails.IsPresented = false;
+            FolderWebView.Host = Host;
+
+            Flyout.IsPresented = false;
             WorkaroundDisplayIssue();
         }
 
@@ -32,12 +51,12 @@ namespace HybridMessageApp
             await Task.Delay(1000);
             Dispatcher.BeginInvokeOnMainThread(() =>
             {
-                MasterDetails.IsPresented = false;
+                Flyout.IsPresented = false;
             });
             await Task.Delay(1);
             Dispatcher.BeginInvokeOnMainThread(() =>
             {
-                MasterDetails.IsPresented = true;
+                Flyout.IsPresented = true;
             });
         }
 

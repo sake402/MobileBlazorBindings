@@ -7,7 +7,7 @@ using XF = Xamarin.Forms;
 
 namespace Microsoft.MobileBlazorBindings.Elements.Handlers
 {
-    public class ModalContainerHandler : IXamarinFormsElementHandler, INonChildContainerElement
+    public class ModalContainerHandler : IXamarinFormsContainerElementHandler, INonChildContainerElement
     {
         public ModalContainerHandler(NativeComponentRenderer renderer, DummyElement modalContainerDummyControl)
         {
@@ -79,6 +79,12 @@ namespace Microsoft.MobileBlazorBindings.Elements.Handlers
             _parentChildManager.SetChild(child);
         }
 
+        public void RemoveChild(XF.Element child)
+        {
+            // TODO: This could probably be implemented at some point, but it isn't needed right now
+            throw new NotImplementedException();
+        }
+
         public bool IsParented()
         {
             // Because this is a 'fake' element, all matters related to physical trees
@@ -100,7 +106,7 @@ namespace Microsoft.MobileBlazorBindings.Elements.Handlers
             throw new NotSupportedException();
         }
 
-        public int GetPhysicalSiblingIndex()
+        public int GetChildIndex(XF.Element child)
         {
             // Because this is a 'fake' element, all matters related to physical trees
             // should be no-ops.

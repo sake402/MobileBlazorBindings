@@ -8,9 +8,9 @@ namespace BlinForms.Framework
 {
     internal class BlinFormsElementManager : ElementManager<IWindowsFormsControlHandler>
     {
-        protected override void RemoveElement(IWindowsFormsControlHandler handler)
+        protected override void RemoveChildElement(IWindowsFormsControlHandler parentHandler, IWindowsFormsControlHandler childHandler)
         {
-            handler.Control.Parent.Controls.Remove(handler.Control);
+            parentHandler.Control.Controls.Remove(childHandler.Control);
         }
 
         protected override void AddChildElement(IWindowsFormsControlHandler parentHandler, IWindowsFormsControlHandler childHandler, int physicalSiblingIndex)
@@ -29,9 +29,9 @@ namespace BlinForms.Framework
             }
         }
 
-        protected override int GetPhysicalSiblingIndex(IWindowsFormsControlHandler handler)
+        protected override int GetChildElementIndex(IWindowsFormsControlHandler parentHandler, IWindowsFormsControlHandler childHandler)
         {
-            return handler.Control.Parent.Controls.GetChildIndex(handler.Control);
+            return parentHandler.Control.Controls.GetChildIndex(childHandler.Control);
         }
 
         protected override bool IsParented(IWindowsFormsControlHandler handler)

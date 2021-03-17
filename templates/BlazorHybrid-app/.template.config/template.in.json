@@ -7,6 +7,7 @@
         "Web"
     ],
     "name": "Experimental Mobile Blazor Bindings Hybrid App",
+    "description": "A multiproject template for using Blazor to build hybrid (native and web) cross-platform applications.",
     "groupIdentity": "Microsoft.MobileBlazorBindings.HybridApp",
     "identity": "Microsoft.MobileBlazorBindings.HybridApp.CSharp",
     "shortName": "blazorhybrid",
@@ -61,9 +62,8 @@
         },
         "AppIdentifier": {
             "type": "parameter",
-            "description": "Overrides the Info.plist's CFBundleIdentifier",
-            "datatype": "string",
-            "defaultValue": "com.companyname"
+            "description": "Overrides the app's bundle identifier",
+            "datatype": "string"
         },
         "AndroidAppIdentifier": {
             "type": "parameter",
@@ -97,13 +97,13 @@
             "type": "parameter",
             "dataType": "string",
             "replaces": "XamarinFormsVersion",
-            "defaultValue": "4.8.0.1451"
+            "defaultValue": "5.0.0.1874"
         },
         "XamarinEssentialsSdk": {
             "type": "parameter",
             "dataType": "string",
             "replaces": "XamarinEssentialsVersion",
-            "defaultValue": "1.5.3.2"
+            "defaultValue": "1.6.0"
         },
         // Project Symbols
         "CreateiOSProject": {
